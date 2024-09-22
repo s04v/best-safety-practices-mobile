@@ -8,10 +8,10 @@ export default function BaseLayout({ children } : Props) {
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
     StatusBar.setBarStyle('dark-content');
-    StatusBar.setBackgroundColor('#fff');
+    //StatusBar.setBackgroundColor('#fff');
     return (
-        <Animated.ScrollView className={`mt-[35px]`} ref={scrollRef} scrollEventThrottle={16}>
-            <Animated.View>
+        <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} style={{ marginTop: StatusBar.currentHeight}}>
+            <Animated.View className="pb-3">
                 { children }
             </Animated.View>
         </Animated.ScrollView>
