@@ -7,7 +7,8 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { PaperProvider } from 'react-native-paper';
-
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider } from '@ui-kitten/components';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -30,12 +31,16 @@ export default function RootLayout() {
   }
 
   return (
-    <PaperProvider theme={DefaultTheme}>
+    <ApplicationProvider  {...eva} theme={eva.light}>
+      <PaperProvider theme={DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'slide_from_right', }} />
           <Stack.Screen name="+not-found" />
-          <Stack.Screen name="home" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="home" options={{ headerShown: false, animation: 'ios' }} /> 
+          <Stack.Screen name="documentPreview" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="searchDocumentsFilter" options={{ headerShown: false, animation: 'ios' }} />
         </Stack>
-    </PaperProvider>
+      </PaperProvider>
+    </ApplicationProvider> 
   );
 }

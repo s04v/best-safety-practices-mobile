@@ -7,12 +7,6 @@ import HomeNewsItem from '@/components/home/HomeNewsItem';
 import { useEffect, useState } from 'react';
 import Backend from '@/services/Backend';
 
-function getTextFromFirstTag(htmlString: string) {
-  const match = htmlString.match(/<[^>]+>([^<]*)<\/[^>]+>/);
-  
-  return match ? match[1] : null;
-}
-
 export default function HomeScreen() {
   const [news, setNews] = useState([]);
 
