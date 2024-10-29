@@ -4,6 +4,7 @@ import Pagination from "@/components/ui/Pagination";
 import { DocumentPreviewItem } from "@/contracts/entities";
 import Backend from "@/services/Backend";
 import { useDocumentSearchStore } from "@/stores/useDocumentSearchStore";
+import { useDocumentStore } from "@/stores/useDocumentStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Input } from "@ui-kitten/components";
 import { router } from "expo-router";

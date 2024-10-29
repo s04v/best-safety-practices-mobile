@@ -5,14 +5,18 @@ import StarRating from "../ui/StarRating";
 import { router } from "expo-router";
 import { DocumentPreviewItem } from "@/contracts/entities";
 import moment from "moment";
+import { useDocumentStore } from "@/stores/useDocumentStore";
 
 type Props = {
     data: DocumentPreviewItem,
 };
 
 export default function SearchBestPracticeItem({ data }: Props) {
+    const documentStore: any = useDocumentStore();
+
     const onPress = () => {
-        router.push('/documentPreview')
+        documentStore.setState({ selectedDocument: data });
+        router.push('/documentPreview');
     }
     
     return (

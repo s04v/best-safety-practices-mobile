@@ -11,7 +11,7 @@ export default function SearchScreen() {
   return (
     <BaseLayout>
       <NavigationButton text="Profile" iconName="person-outline" href="/home" />
-      <NavigationButton text="Submit Best Practice" iconName="document-outline" href="/home"  />
+      <NavigationButton text="Submit Best Practice" iconName="document-outline" href="/submitDocument"  />
       <NavigationButton text="Submit Url" iconName="link-outline" href="/home"  />
       <NavigationButton text="Logout" iconName="exit-outline" href="/home"  />
     </BaseLayout>

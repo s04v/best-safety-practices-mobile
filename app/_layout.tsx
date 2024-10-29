@@ -38,7 +38,9 @@ export default function RootLayout() {
           <Stack.Screen name="+not-found" />
           <Stack.Screen name="home" options={{ headerShown: false, animation: 'ios' }} /> 
           <Stack.Screen name="documentPreview" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="createDocumentReview" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="searchDocumentsFilter" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="submitDocument" options={{ headerShown: false, animation: 'ios' }} />
         </Stack>
       </PaperProvider>
     </ApplicationProvider> 
