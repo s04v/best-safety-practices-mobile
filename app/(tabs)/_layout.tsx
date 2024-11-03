@@ -45,6 +45,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="menu"
         options={{
+          unmountOnBlur: true,
           title: 'Menu',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'menu' : 'menu-outline'} color={color} />

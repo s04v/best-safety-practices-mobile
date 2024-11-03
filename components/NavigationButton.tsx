@@ -11,7 +11,9 @@ type Props = {
 
 export default function NavigationButton({ iconName, text, href }: Props) {
     const onPress = () => {
-        router.push(href as Href);
+        if (href) {
+            router.push(href as Href);
+        }
     }
 
     return  (
