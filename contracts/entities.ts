@@ -7,3 +7,12 @@ export interface DocumentPreviewItem {
     language: string,
     uploadDate: Date,
 };
+
+export interface UrlDocument {
+    id: number,
+    title: string,
+    rating: number,
+    interest: string,
+    language: string,
+    uploadDate: Date,
+}

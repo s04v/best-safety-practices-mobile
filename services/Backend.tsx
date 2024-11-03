@@ -1,15 +1,16 @@
 
+import * as SecureStore from 'expo-secure-store';
+
 const BASE_URL = "https://bsp-backend-xqdx.onrender.com/api";
-// const BASE_URL = "https://localhost:7091/api";
 
 const getHeaders = () => {
-    let headers = {
+    let headers: any = {
         "Content-Type": "application/json",
     }
-
-    // if (jwt) {
-    //     headers = { ...headers, "Authorization": `Bearer ${jwt}` };
-    // }
+    const jwt = SecureStore.getItem("jwt");
+    if (jwt) {
+        headers = { ...headers, "Authorization": `Bearer ${jwt}` };
+    }
 
     return headers;
 }

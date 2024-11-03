@@ -41,6 +41,11 @@ export default function RootLayout() {
           <Stack.Screen name="createDocumentReview" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="searchDocumentsFilter" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="submitDocument" options={{ headerShown: false, animation: 'ios' }} />
+
+          <Stack.Screen name="urlDocumentPreview" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="createUrlDocumentReview" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="searchUrlDocumentsFilter" options={{ headerShown: false, animation: 'ios' }} />
+
           <Stack.Screen name="login" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="register" options={{ headerShown: false, animation: 'ios' }} />
         </Stack>
