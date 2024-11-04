@@ -16,3 +16,11 @@ export interface UrlDocument {
     language: string,
     uploadDate: Date,
 }
+
+export interface News {
+    id: number,
+    description: string,
+    photo: number,
+    title: string,
+    uploadDate: Date,
+}

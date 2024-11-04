@@ -37,6 +37,9 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'slide_from_right', }} />
           <Stack.Screen name="+not-found" />
           <Stack.Screen name="home" options={{ headerShown: false, animation: 'ios' }} /> 
+
+          <Stack.Screen name="newsPreview" options={{ headerShown: false, animation: 'ios' }} />
+
           <Stack.Screen name="documentPreview" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="createDocumentReview" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="searchDocumentsFilter" options={{ headerShown: false, animation: 'ios' }} />

@@ -10,9 +10,9 @@ export default function ScreenLayout({ children }: any) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
 
   return (
-    <SafeAreaView style={{ marginTop: StatusBar.currentHeight }} className="flex-1 pb-4">
-      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
-        <Animated.View className="pb-3">
+    <SafeAreaView style={{ marginTop: StatusBar.currentHeight }} className="flex-1 h-[100%]">
+      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} className="flex-1 h-[100%]">
+        <Animated.View className="pb-5 flex-1 h-screen" >
           <Pressable className="m-5" onPress={() => { navigation.goBack(); }}>
             <Ionicons name="arrow-back" size={28}  />
           </Pressable>
