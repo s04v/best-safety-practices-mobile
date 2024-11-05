@@ -6,9 +6,10 @@ import { DocumentPreviewItem, News } from "@/contracts/entities";
 import Backend from "@/services/Backend";
 import { useDocumentSearchStore } from "@/stores/useDocumentSearchStore";
 import { useDocumentStore } from "@/stores/useDocumentStore";
+import { useNewsStore } from "@/stores/useNewsStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Input } from "@ui-kitten/components";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Pressable, ScrollView, View } from "react-native";
 import { Icon, Text, TextInput } from "react-native-paper";
@@ -16,12 +17,13 @@ import { Icon, Text, TextInput } from "react-native-paper";
 const PAGE_SIZE = 10;
 
 export default function SearchNews() {
-    const store: any = useDocumentSearchStore();
+    const params = useLocalSearchParams();
+    const store: any = useNewsStore();
 
     const [isLoading, setIsLoading] = useState(true);
     const [news, setNews] = useState<News[]>([]);
     const [totalDocuments, setTotalDocuments] = useState(0);
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState(params.searchQuery as string || "");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
@@ -46,6 +48,14 @@ export default function SearchNews() {
     }
 
     useEffect(() => {
+        if (params.searchQuery) {
+            setSearchQuery(params.searchQuery as string);
+            router.setParams({ searchQuery: "" });
+            search();
+        }
+    }, []);
+
+    useEffect(() => {
         setCurrentPage(1);
     },[store]);
 
@@ -54,6 +64,7 @@ export default function SearchNews() {
     },[currentPage]);
 
     const search = () => {
+        console.log(searchQuery);
         fetchNews();
     }
 

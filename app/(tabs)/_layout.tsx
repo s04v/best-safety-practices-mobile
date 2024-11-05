@@ -45,6 +45,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="searchNews"
         options={{
+          unmountOnBlur: true,
           title: 'News',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
