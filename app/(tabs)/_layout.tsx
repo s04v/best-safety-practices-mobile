@@ -48,7 +48,7 @@ export default function TabLayout() {
           unmountOnBlur: true,
           title: 'News',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
+            <TabBarIcon name={focused ? 'newspaper' : 'newspaper-outline'} color={color} />
           ),
         }}
       />
