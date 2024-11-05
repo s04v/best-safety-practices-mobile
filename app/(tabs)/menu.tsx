@@ -22,6 +22,7 @@ export default function SearchScreen() {
     <BaseLayout>
     { isUserLoggedIn() ? <>
       <NavigationButton text="Profile" iconName="person-outline" href="/profileMenu" />
+      <NavigationButton text="Dashboard" iconName="person-outline" href="/dashboardMenu" />
       <NavigationButton text="Submit Best Practice" iconName="document-outline" href="/submitDocument"  />
       <NavigationButton text="Submit Url" iconName="link-outline" href="/home"  />
       <Pressable onPress={logout}>
