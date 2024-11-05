@@ -7,7 +7,6 @@ import { isUserLoggedIn } from '@/utils/utils';
 import * as SecureStore from 'expo-secure-store';
 
 import { reloadAppAsync } from 'expo';
-import ProfileMenuLayout from '@/components/ProfileMenuLayout';
 import ScreenLayout from '@/components/ScreenLayout';
 
 export default function ProfileMenuScreen() {
@@ -23,7 +22,7 @@ export default function ProfileMenuScreen() {
   return (
     <ScreenLayout>
       <NavigationButton text="Personal Information" iconName="person-outline" href="/updatePersonalInfo" />
-      <NavigationButton text="Uploaded Documents" iconName="attach-outline" href="/submitDocument"  />
+      <NavigationButton text="Uploaded Documents" iconName="attach-outline" href="/uploadedDocuments"  />
       <NavigationButton text="Subscription" iconName="file-tray-full-outline" href="/home"  />
     </ScreenLayout>
   );

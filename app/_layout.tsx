@@ -54,6 +54,7 @@ export default function RootLayout() {
 
           <Stack.Screen name="profileMenu" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="updatePersonalInfo" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="uploadedDocuments" options={{ headerShown: false, animation: 'ios' }} />
         </Stack>
       </PaperProvider>
     </ApplicationProvider> 
