@@ -23,7 +23,7 @@ export default function ProfileMenuScreen() {
     <ScreenLayout>
       <NavigationButton text="Personal Information" iconName="person-outline" href="/updatePersonalInfo" />
       <NavigationButton text="Uploaded Documents" iconName="attach-outline" href="/uploadedDocuments"  />
-      <NavigationButton text="Subscription" iconName="file-tray-full-outline" href="/home"  />
+      <NavigationButton text="Subscription" iconName="file-tray-full-outline" href="/subscription"  />
     </ScreenLayout>
   );
 }

@@ -66,7 +66,7 @@ export default function UploadedDocumentsScreen() {
         </View> 
         : <View>
           <View> 
-              {documents?.map(item => <SearchBestPracticeItem data={item} />)}
+            {documents?.map(item => <SearchBestPracticeItem data={item} />)}
           </View>
           <View className="flex-row justify-center">
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
