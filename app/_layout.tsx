@@ -31,7 +31,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ApplicationProvider  {...eva} theme={eva.light}>
+    <ApplicationProvider {...eva} theme={eva.light}>
       <PaperProvider theme={DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'slide_from_right', }} />
@@ -51,6 +51,9 @@ export default function RootLayout() {
 
           <Stack.Screen name="login" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="register" options={{ headerShown: false, animation: 'ios' }} />
+
+          <Stack.Screen name="profileMenu" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="updatePersonalInfo" options={{ headerShown: false, animation: 'ios' }} />
         </Stack>
       </PaperProvider>
     </ApplicationProvider> 
