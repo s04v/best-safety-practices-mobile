@@ -32,24 +32,24 @@ const isFocused = useIsFocused();
     setIsLoading(true);
 
     Backend.get('user')
-        .then((data) => {
-            setUsers(data.data);
-            setTotalUsers(data.totalCount);
-            setTotalPages(Math.ceil(data.totalCount / PAGE_SIZE))
-        })
-        .catch(err => {
-            console.error(err);
-        })
-        .then(res => setIsLoading(false));
-    }
+      .then((data) => {
+        setUsers(data.data);
+        setTotalUsers(data.totalCount);
+        setTotalPages(Math.ceil(data.totalCount / PAGE_SIZE))
+      })
+      .catch(err => {
+        console.error(err);
+      })
+      .then(res => setIsLoading(false));
+  }
 
-    useEffect(() => {
-        setCurrentPage(1);
-    },[store]);
+  useEffect(() => {
+    setCurrentPage(1);
+  },[store]);
 
-    useEffect(() => {
-        fetchUsers();
-    },[currentPage]);
+  useEffect(() => {
+    fetchUsers();
+  },[currentPage]);
 
   return (
     <BaseLayout>

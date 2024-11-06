@@ -60,6 +60,7 @@ export default function RootLayout() {
           <Stack.Screen name="dashboardMenu" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="usersList" options={{ headerShown: false, animation: 'ios' }} />
           <Stack.Screen name="updateUsersPersonalInfo" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="permissions" options={{ headerShown: false, animation: 'ios' }} />
         </Stack>
       </PaperProvider>
     </ApplicationProvider> 
