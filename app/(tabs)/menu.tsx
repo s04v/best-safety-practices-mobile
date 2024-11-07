@@ -25,7 +25,7 @@ export default function SearchScreen() {
       <NavigationButton text="Dashboard" iconName="person-outline" href="/dashboardMenu" />
       <NavigationButton text="Submit Best Practice" iconName="document-outline" href="/submitDocument"  />
       <NavigationButton text="Submit Url" iconName="link-outline" href="/submitUrl"  />
-      <NavigationButton text="Logout" iconName="link-outline" onClick={logout}  />
+      <NavigationButton text="Logout" iconName="log-out-outline" onClick={logout}  />
     </>
     : <>
       <NavigationButton text="Login" iconName="enter-outline" href="/login" />

@@ -7,7 +7,7 @@ import { useDocumentSearchStore } from "@/stores/useDocumentSearchStore";
 import { useDocumentStore } from "@/stores/useDocumentStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Input } from "@ui-kitten/components";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Pressable, ScrollView, View } from "react-native";
 import { Icon, Text, TextInput } from "react-native-paper";
@@ -53,14 +53,9 @@ export default function SearchDocuments() {
             })
             .then(res => setIsLoading(false));
     }
-
-    useEffect(() => {
-        setCurrentPage(1);
-    },[store]);
-
     useEffect(() => {
         fetchDocuments();
-    },[currentPage]);
+    },[currentPage, isFiltersApplied]);
 
     const openFilters = () => {
         router.push('/searchDocumentsFilter');

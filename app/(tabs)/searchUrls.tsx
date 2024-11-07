@@ -55,12 +55,8 @@ export default function SearchUrlDocuments() {
     };
 
     useEffect(() => {
-        setCurrentPage(1);
-    }, [store]);
-
-    useEffect(() => {
         fetchUrlDocuments();
-    }, [currentPage]);
+    }, [currentPage, isFiltersApplied]);
 
     const openFilters = () => {
         router.push('/searchUrlDocumentsFilter');
