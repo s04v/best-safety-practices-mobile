@@ -9,7 +9,7 @@ import * as SecureStore from 'expo-secure-store';
 import { reloadAppAsync } from 'expo';
 
 export default function SearchScreen() {
-  const logout = async (e: any) => {
+  const logout = async () => {
     try {
       await SecureStore.deleteItemAsync("jwt");
       router.navigate("/")
@@ -24,11 +24,8 @@ export default function SearchScreen() {
       <NavigationButton text="Profile" iconName="person-outline" href="/profileMenu" />
       <NavigationButton text="Dashboard" iconName="person-outline" href="/dashboardMenu" />
       <NavigationButton text="Submit Best Practice" iconName="document-outline" href="/submitDocument"  />
-      <NavigationButton text="Submit Url" iconName="link-outline" href="/home"  />
-      <Pressable onPress={logout}>
-        <Text className="py-3 px-4 border border-black">Logout</Text>
-        {/* <NavigationButton text="Logout" iconName="exit-outline" href=""  /> */}
-      </Pressable>
+      <NavigationButton text="Submit Url" iconName="link-outline" href="/submitUrl"  />
+      <NavigationButton text="Logout" iconName="link-outline" onClick={logout}  />
     </>
     : <>
       <NavigationButton text="Login" iconName="enter-outline" href="/login" />

@@ -6,13 +6,16 @@ import { Text, TouchableRipple } from "react-native-paper";
 type Props = {
     iconName: React.ComponentProps<typeof Ionicons>["name"],
     text: string,
-    href: string
+    href?: string,
+    onClick?: () => void,
 };
 
-export default function NavigationButton({ iconName, text, href }: Props) {
+export default function NavigationButton({ iconName, text, href, onClick }: Props) {
     const onPress = () => {
         if (href) {
             router.push(href as Href);
+        } else if (onClick) {
+            onClick();
         }
     }
 
