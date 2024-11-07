@@ -31,7 +31,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout withHeader>
       <Image source={require("@/assets/images/HomeBanner.jpg")} className="w-[100%] object-contain h-[200px]" resizeMode='cover'/>
       <View className="px-4">
         <Input 

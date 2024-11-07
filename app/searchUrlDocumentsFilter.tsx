@@ -4,6 +4,7 @@ import { Button, Icon, IndexPath, Input, Layout, Select, SelectItem } from '@ui-
 import ScreenLayout from '@/components/ScreenLayout';
 import { useNavigation } from 'expo-router';
 import { useUrlDocumentSearchStore } from '@/stores/useUrlDocumentSearchStore';
+import BaseLayout from '@/components/BaseLayout';
 
 const languages = ["English", "Dutch", "German", "Spanish", "French", "Chinese"];
 const interests = ["Transport safety", "Industrial safety", "Chemical warehousing", "Tank storage"];
@@ -34,7 +35,7 @@ export default function SearchUrlDocumentsFilterScreen() {
   }
 
   return (
-    <ScreenLayout>
+    <BaseLayout>
       <View className="px-5 flex-col flex-1">
         <View className="flex-col gap-y-4 flex-1">
           <Select
@@ -52,12 +53,12 @@ export default function SearchUrlDocumentsFilterScreen() {
             { languages.map((item: string) => <SelectItem title={item} /> ) }
           </Select>
         </View>
-        <View className="flex-row self-stretch gap-x-2">
+        <View className="flex-row self-stretch gap-x-2 mt-3">
           <Button status='danger' style={{ flex: 1 }} onPress={resetFilters}>Reset</Button>
           <Button style={{ flex: 1 }} onPress={applyFilters}>Apply</Button>
         </View>
       </View>
-    </ScreenLayout>
+    </BaseLayout>
   );
 }
 

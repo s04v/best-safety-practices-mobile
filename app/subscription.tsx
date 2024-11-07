@@ -33,11 +33,7 @@ export default function SubscriptionScreen() {
 
   return (
     <BaseLayout>
-      <Pressable className="m-4 mb-0" onPress={() => { navigation.goBack(); }}>
-        <Ionicons name="arrow-back" size={28}  />
-      </Pressable>
       <View className="px-4">
-        <Text className="text-center mb-2 text-2xl font-bold">Subscription</Text>
         <Text className="my-2 text-xl font-bold">Current plan</Text>
         <Text className="text-lg mb-3">{currentPlan}</Text>
         <Button status="info" onPress={openPortal}>Open customer portal</Button>

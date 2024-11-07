@@ -16,36 +16,28 @@ const languages = ["English", "Dutch", "German", "Spanish", "French", "Chinese"]
 const interests = ["Transport safety", "Industrial safety", "Chemical warehousing", "Tank storage"];
 
 const validationSchema = Yup.object({
-  file: Yup.mixed()
-    .required("File is required"),
-  pages: Yup.number()
-    .required("Pages field is required")
-    .positive("Pages must be a positive number")
-    .integer("Pages must be an integer"),
-  uploadByCompany: Yup.boolean()
-    .required("Upload by company flag is required")
-    .oneOf([true, false], "Upload by company must be true or false"),
-  publisher: Yup.string()
+  description: Yup.string()
     .trim()
-    .required("Publisher is required")
-    .min(3, "Publisher name must be at least 3 characters long"),
+    .required("Description is required"),
   publicationYear: Yup.string()
     .trim()
     .matches(/^\d{4}$/, "Publication year must be a 4-digit number")
     .required("Publication year is required"),
+  publicationMonth: Yup.string()
+    .trim()
+    .required("Publication month is required"),
   country: Yup.string()
     .trim()
     .required("Country is required"),
+  uploadByCompany: Yup.boolean()
+    .required("Upload by company flag is required")
+    .oneOf([true, false], "Upload by company must be true or false"),
   language: Yup.string()
     .trim()
     .required("Language is required"),
   interest: Yup.string()
     .trim()
     .required("Interest field is required"),
-  shortDescription: Yup.string()
-    .trim()
-    .required("Short description is required")
-    .max(500, "Description cannot exceed 500 characters"),
   title: Yup.string()
     .trim()
     .required("Title is required")

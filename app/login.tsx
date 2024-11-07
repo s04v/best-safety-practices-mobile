@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 import * as SecureStore from 'expo-secure-store';
+import BaseLayout from '@/components/BaseLayout';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -43,10 +44,10 @@ export default function LoginScreen() {
   };
 
   return (
-    <ScreenLayout>
+    <BaseLayout>
       <View className="px-5 flex-col flex-1">
         <View className="flex-col gap-y-4 flex-1">
-          {error && <Alert>{error}</Alert>}
+          {error && <View className="mt-1"><Alert>{error}</Alert></View>}
           <Input 
             label="Email"
             placeholder="Enter your email"
@@ -67,6 +68,6 @@ export default function LoginScreen() {
           <Button style={{ flex: 1 }} onPress={sendForm}>Login</Button>
         </View>
       </View>
-    </ScreenLayout>
+    </BaseLayout>
   );
 }

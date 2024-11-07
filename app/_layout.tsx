@@ -38,29 +38,31 @@ export default function RootLayout() {
           <Stack.Screen name="+not-found" />
           <Stack.Screen name="home" options={{ headerShown: false, animation: 'ios' }} /> 
 
-          <Stack.Screen name="newsPreview" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="newsPreview" options={{ title: "News", animation: 'ios' }} />
 
-          <Stack.Screen name="documentPreview" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="createDocumentReview" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="searchDocumentsFilter" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="submitDocument" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="documentPreview" options={{ title: "Document", animation: 'ios' }} />
+          <Stack.Screen name="createDocumentReview" options={{ title: "Review", animation: 'ios' }} />
+          <Stack.Screen name="searchDocumentsFilter" options={{ title: "Filters", animation: 'ios' }} />
+          <Stack.Screen name="submitDocument" options={{ title: "Submit document", animation: 'ios' }} />
 
-          <Stack.Screen name="urlDocumentPreview" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="createUrlDocumentReview" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="searchUrlDocumentsFilter" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="urlDocumentPreview" options={{ title: "Url", animation: 'ios' }} />
+          <Stack.Screen name="createUrlDocumentReview" options={{ title: "Review", animation: 'ios' }} />
+          <Stack.Screen name="searchUrlDocumentsFilter" options={{ title: "Filters", animation: 'ios' }} />
+          <Stack.Screen name="submitUrl" options={{ title: "Submit url", animation: 'ios' }} />
 
-          <Stack.Screen name="login" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="register" options={{ headerShown: false, animation: 'ios' }} />
 
-          <Stack.Screen name="profileMenu" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="updatePersonalInfo" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="uploadedDocuments" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="subscription" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="login" options={{ title: "Login", animation: 'ios' }} />
+          <Stack.Screen name="register" options={{ title: "Register", animation: 'ios' }} />
 
-          <Stack.Screen name="dashboardMenu" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="usersList" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="updateUsersPersonalInfo" options={{ headerShown: false, animation: 'ios' }} />
-          <Stack.Screen name="permissions" options={{ headerShown: false, animation: 'ios' }} />
+          <Stack.Screen name="profileMenu" options={{ title: "Profile",  animation: 'ios' }} />
+          <Stack.Screen name="updatePersonalInfo" options={{ title: "Personal info", animation: 'ios' }} />
+          <Stack.Screen name="uploadedDocuments" options={{ title: "Uploaded documents", animation: 'ios' }} />
+          <Stack.Screen name="subscription" options={{ title: "Subscription", animation: 'ios' }} />
+
+          <Stack.Screen name="dashboardMenu" options={{ title: "Dashboard", animation: 'ios' }} />
+          <Stack.Screen name="usersList" options={{ title: "Users", animation: 'ios' }} />
+          <Stack.Screen name="updateUsersPersonalInfo" options={{ title: "Update user", animation: 'ios' }} />
+          <Stack.Screen name="permissions" options={{ title: "Permissions", animation: 'ios' }} />
         </Stack>
       </PaperProvider>
     </ApplicationProvider> 

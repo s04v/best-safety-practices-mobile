@@ -14,7 +14,6 @@ import * as Yup from 'yup';
 const languages = ["English", "Dutch", "German", "Spanish", "French", "Chinese"];
 const interests = ["Transport safety", "Industrial safety", "Chemical warehousing", "Tank storage"];
 
-
 const validationSchema = Yup.object().shape({
   zipcode: Yup.string()
     .matches(/^[0-9]{5}$/, 'Enter a valid 5-digit zip code'),
@@ -149,9 +148,6 @@ const prepareBody = () => {
   
   return (
     <BaseLayout>
-     <Pressable className="m-4" onPress={() => { navigation.goBack(); }}>
-        <Ionicons name="arrow-back" size={28}  />
-      </Pressable>
       <View className="px-5 flex-col flex-1">
         <View className="flex-col gap-y-4 flex-1">
           {error && <Alert>{error}</Alert> }

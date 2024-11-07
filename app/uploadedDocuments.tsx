@@ -54,13 +54,9 @@ export default function UploadedDocumentsScreen() {
   },[currentPage]);
 
   return (
-    <BaseLayout>
-      <Pressable className="m-4 mb-0" onPress={() => { navigation.goBack(); }}>
-        <Ionicons name="arrow-back" size={28}  />
-      </Pressable>
+    <BaseLayout >
       <View className="px-4">
-        <Text className="text-center mb-2 text-2xl font-bold">Uploaded best practices</Text>
-        <Text className="my-3">Found <Text className="font-bold">{totalDocuments}</Text> uploaded documents</Text>
+        <Text className="mb-3">Found <Text className="font-bold">{totalDocuments}</Text> uploaded documents</Text>
         { isLoading ? <View className="h-[400px] flex-row flex-1 justify-center items-center">
           <ActivityIndicator size="large" />
         </View> 

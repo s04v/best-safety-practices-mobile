@@ -117,9 +117,6 @@ const prepareBody = () => {
   
   return (
     <BaseLayout>
-     <Pressable className="m-4" onPress={() => { navigation.goBack(); }}>
-        <Ionicons name="arrow-back" size={28}  />
-      </Pressable>
       <View className="px-5 flex-col flex-1">
         <View className="flex-col gap-y-4 flex-1">
           {error && <Alert>{error}</Alert> }

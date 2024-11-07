@@ -1,4 +1,5 @@
 
+import BaseLayout from '@/components/BaseLayout';
 import ScreenLayout from '@/components/ScreenLayout';
 import { Alert } from '@/components/ui/Alert';
 import StarRating from '@/components/ui/StarRating';
@@ -42,7 +43,7 @@ export default function CreateUrlDocumentReviewScreen() {
   }
 
   return (
-    <ScreenLayout>
+    <BaseLayout>
       <View className="px-4 flex-col flex-1">
         { error && <Alert>{error}</Alert> }
         <StarRating value={rating} size={44} onChange={(value) => setRating(value)} />
@@ -57,7 +58,7 @@ export default function CreateUrlDocumentReviewScreen() {
         </View>
         <Button status="info" style={{ marginTop: 8 }} onPress={sendReview}>Send</Button>
       </View>
-    </ScreenLayout>
+    </BaseLayout>
   );
 }
 

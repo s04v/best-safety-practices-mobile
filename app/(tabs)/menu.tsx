@@ -19,7 +19,7 @@ export default function SearchScreen() {
   };
 
   return (
-    <BaseLayout>
+    <BaseLayout withHeader>
     { isUserLoggedIn() ? <>
       <NavigationButton text="Profile" iconName="person-outline" href="/profileMenu" />
       <NavigationButton text="Dashboard" iconName="person-outline" href="/dashboardMenu" />

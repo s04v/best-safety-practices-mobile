@@ -1,3 +1,4 @@
+import BaseLayout from '@/components/BaseLayout';
 import ScreenLayout from '@/components/ScreenLayout';
 import { Alert } from '@/components/ui/Alert';
 import Backend from '@/services/Backend';
@@ -101,7 +102,7 @@ export default function RegisterScreen() {
   };
   
   return (
-    <ScreenLayout>
+    <BaseLayout>
       <View className="px-5 flex-col flex-1">
         <View className="flex-col gap-y-4 flex-1">
           {error && <Alert>{error}</Alert> }
@@ -196,6 +197,6 @@ export default function RegisterScreen() {
           <Button style={{ flex: 1 }} onPress={sendForm}>Register</Button>
         </View>
       </View>
-    </ScreenLayout>
+    </BaseLayout>
   );
 }

@@ -57,10 +57,6 @@ export default function UrlDocumentPreviewScreen() {
 
   return (
     <BaseLayout>
-      <Pressable className="m-4" onPress={() => { navigation.goBack(); }}>
-        <Ionicons name="arrow-back" size={28}  />
-      </Pressable>
-
       { isLoading ? <View className="h-screen flex-row flex-1 justify-center items-center">
           <ActivityIndicator size="large" />
         </View> 

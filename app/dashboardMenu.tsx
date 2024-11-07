@@ -12,10 +12,10 @@ import ScreenLayout from '@/components/ScreenLayout';
 export default function DashboardMenuScreen() {
 
   return (
-    <ScreenLayout>
+    <BaseLayout>
       <NavigationButton text="Users" iconName="person-outline" href="/usersList" />
       <NavigationButton text="Best Practices" iconName="attach-outline" href="/uploadedDocuments"  />
       <NavigationButton text="Permissions" iconName="file-tray-full-outline" href="/permissions"  />
-    </ScreenLayout>
+    </BaseLayout>
   );
 }

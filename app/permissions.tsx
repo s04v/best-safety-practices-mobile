@@ -36,10 +36,6 @@ export default function PermissionsScreen() {
   console.log(JSON.stringify(permissions));
   return (
     <BaseLayout>
-      <Pressable className="m-4" onPress={() => { navigation.goBack(); }}>
-        <Ionicons name="arrow-back" size={28}  />
-      </Pressable>
-
       <View className="px-4 flex-col flex-1 gap-y-2">
         {permissions.map(item => (
           <View >

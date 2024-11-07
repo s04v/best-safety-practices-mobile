@@ -71,7 +71,7 @@ export default function SearchUrlDocuments() {
     };
     console.log(urlDocuments);
     return (
-        <BaseLayout>
+        <BaseLayout withHeader>
             <View className="px-4">
                 <Text className="text-center my-2 text-2xl font-bold">Search URL documents</Text>
                 <View className="flex-row self-stretch items-center gap-x-3 w-full">

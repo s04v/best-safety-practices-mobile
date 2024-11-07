@@ -34,15 +34,15 @@ function post(endpoint: string, body: any) {
 }
 
 function postFormData(endpoint: string, body: any) {
-    // const headers = getHeaders();
+    const headers = getHeaders();
 
-    // const requestOptions = {
-    //     method: 'POST',
-    //     headers: headers.Authorization ? { Authorization: headers.Authorization } : {},
-    //     body: body
-    // };
+    const requestOptions: any = {
+        method: 'POST',
+        headers: headers.Authorization ? { Authorization: headers.Authorization } : {},
+        body: body
+    };
 
-    // return fetch(`${BASE_URL}/${endpoint}`, requestOptions).then(handleResponse);
+    return fetch(`${BASE_URL}/${endpoint}`, requestOptions).then(handleResponse);
 }
 
 function put(endpoint: string, body: any) {
