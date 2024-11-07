@@ -10,7 +10,7 @@ import { useDocumentStore } from '@/stores/useDocumentStore';
 import { useUrlDocumentStore } from '@/stores/useUrlDocumentStore';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from '@ui-kitten/components';
-import { router, useNavigation } from 'expo-router';
+import { router, useFocusEffect, useNavigation } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, SafeAreaView, StatusBar, Pressable, Platform, Text, ActivityIndicator } from 'react-native';
 import { Icon, TouchableRipple } from 'react-native-paper';
@@ -44,8 +44,8 @@ export default function UrlDocumentPreviewScreen() {
       .catch(err => {
         console.error(err);
       });
-    console.log(id);
-    Backend.get(`url/${id}`)
+
+      Backend.get(`url/${id}`)
       .then((data) => {
         setUrl(data);
       })
@@ -55,6 +55,19 @@ export default function UrlDocumentPreviewScreen() {
       .then(res => setIsLoading(false));
   }, []);
 
+
+  useFocusEffect(() => {
+    const id = urlStore.selectedUrlDocument.id;
+
+    Backend.get(`url/${id}/review`)
+      .then((data) => {
+        setReviews(data);
+        setRating(data.reduce((partialSum: number, r: any) => partialSum + r.rating, 0) / data.length);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  });
   return (
     <BaseLayout>
       { isLoading ? <View className="h-screen flex-row flex-1 justify-center items-center">

@@ -19,6 +19,9 @@ const validationSchema = Yup.object({
   description: Yup.string()
     .trim()
     .required("Description is required"),
+  url: Yup.string()
+    .trim()
+    .required("Url is required"),
   publicationYear: Yup.string()
     .trim()
     .matches(/^\d{4}$/, "Publication year must be a 4-digit number")
@@ -26,9 +29,6 @@ const validationSchema = Yup.object({
   publicationMonth: Yup.string()
     .trim()
     .required("Publication month is required"),
-  country: Yup.string()
-    .trim()
-    .required("Country is required"),
   uploadByCompany: Yup.boolean()
     .required("Upload by company flag is required")
     .oneOf([true, false], "Upload by company must be true or false"),
@@ -49,68 +49,39 @@ export default function SubmitDocumentScreen() {
   const navigation = useNavigation();
 
   const [title, setTitle] = useState("");
-  const [shortDescription, setShortDescription] = useState("");
   const [interest, setInterest] = useState("");
   const [language, setLanguage] = useState("");
-  const [country, setCountry] = useState("");
-  const [publicationYear, setPublicationYear] = useState("");
-  const [publisher, setPublisher] = useState("");
   const [uploadByCompany, setUploadByCompany] = useState<any>(false);
-  const [pages, setPages] = useState("");
-  const [file, setFile] = useState<any>({});
+  const [publicationYear, setPublicationYear] = useState("");
+  const [publicationMonth, setPublicationMonth] = useState("");
+  const [url, setUrl] = useState("");
+  const [description, setDescription] = useState("");
   
   const getInterestByIndex = (index: number): string => interests.at(index)!;
   const getLanguageByIndex = (index: number): string => languages.at(index)!;
 
-  const uploadFile = async () => {
-    const result: any = await DocumentPicker.getDocumentAsync();
-    setFile(result.assets[0]);
-  }
-
   const sendForm = () => {
-    const jsonBody = {
+    const body = {
       title,
-      shortDescription,
       interest,
       language,
-      country,
       publicationYear,
-      publisher,
+      publicationMonth,
       uploadByCompany,
-      pages,
-      file,
+      url,
+      description,
     };
     
     try {
-      validationSchema.validateSync(jsonBody, { abortEarly: true });
+      validationSchema.validateSync(body, { abortEarly: true });
     } catch (error: any) {
       setError(error?.errors?.length >= 1 && error?.errors.slice(-1));
       return;
     }
 
-    const body = new FormData();
-
-    body.append("title", title);
-    body.append("shortDescription", shortDescription);
-    body.append("interest", interest);
-    body.append("language", language);
-    body.append("country", country);
-    body.append("uploadByCompany", uploadByCompany);
-    body.append("publicationYear", publicationYear);
-    body.append("publisher", publisher);
-    body.append("pages", pages);
-
-    const f: any = {
-      uri: file.uri,
-      name: file.name,
-      type: file.mimeType
-    };
-
-    body.append("file", f);
-
-    Backend.postFormData('document', body)
+    Backend.post('url', body)
     .then(res => {
-      router.navigate('/searchDocuments');
+      router.navigate('/searchUrls');
     })
     .catch(err => console.error(err));
   }
@@ -125,12 +96,6 @@ export default function SubmitDocumentScreen() {
             placeholder='Title'
             value={title}
             onChangeText={(value: string) => setTitle(value)}
-            />
-          <Input 
-            label='Short description'
-            placeholder='Short description'
-            value={shortDescription}
-            onChangeText={(value: string) => setShortDescription(value)}
             />
           <Select
             label="Interest"
@@ -155,10 +120,10 @@ export default function SubmitDocumentScreen() {
             <SelectItem title="No" />
           </Select>
           <Input 
-            label='Country'
-            placeholder='Country'
-            value={country}
-            onChangeText={(value: string) => setCountry(value)}
+            label='Publication month'
+            placeholder='Publication month'
+            value={publicationMonth}
+            onChangeText={(value: string) => setPublicationMonth(value)}
           />
           <Input 
             label='Publication year'
@@ -167,19 +132,19 @@ export default function SubmitDocumentScreen() {
             onChangeText={(value: string) => setPublicationYear(value)}
           />
           <Input 
-            label='Publisher'
-            placeholder='Publisher'
-            value={publisher}
-            onChangeText={(value: string) => setPublisher(value)}
+            label='Url'
+            placeholder='Url'
+            value={url}
+            onChangeText={(value: string) => setUrl(value)}
+            multiline={true}
           />
           <Input 
-            label='Pages'
-            placeholder='Pages'
-            value={pages}
-            onChangeText={(value: string) => setPages(value)}
+            label='Description'
+            placeholder='Description'
+            value={description}
+            onChangeText={(value: string) => setDescription(value)}
+            multiline={true}
           />
-            {file.name && <Text>{file.name}</Text>}
-          <Button status="info" style={{ flex: 1 }} onPress={uploadFile}>Upload file</Button>
         </View>
         <View className="flex-row self-stretch gap-x-2 mt-2">
           <Button status="info" style={{ flex: 1 }} onPress={sendForm}>Submit</Button>
