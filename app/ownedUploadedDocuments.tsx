@@ -33,7 +33,7 @@ export default function UploadedDocumentsScreen() {
   const fetchDocuments = () => {
     setIsLoading(true);
 
-    Backend.get(`document?page=${currentPage - 1}`)
+    Backend.get(`document?page=${currentPage - 1}&owner=true`)
       .then((data) => {
         console.log(data);
           setDocuments(data.data as DocumentPreviewItem[]);

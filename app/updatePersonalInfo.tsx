@@ -2,7 +2,8 @@ import BaseLayout from '@/components/BaseLayout';
 import ScreenLayout from '@/components/ScreenLayout';
 import { Alert } from '@/components/ui/Alert';
 import { SuccessAlert } from '@/components/ui/SuccessAlert';
-import Backend from '@/services/Backend';
+import { UserPermissions } from '@/constants/permisions';
+import Backend, { userHasPermissions } from '@/services/Backend';
 import { Ionicons } from '@expo/vector-icons';
 import { Button, Datepicker, Input, Select, SelectItem } from '@ui-kitten/components';
 import { router, useNavigation } from 'expo-router';
@@ -50,6 +51,8 @@ export default function UpdatePersonalInfoScreen() {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [zipcode, setZipcode] = useState("");
+  const [userCanChangeMailFrequency, setUserCanChangeMailFrequency] = useState("");
+  const [mailingFrequency, setMailingFrequency] = useState("");
   
   const getInterestByIndex = (index: number): string => interests.at(index)!;
   const getLanguageByIndex = (index: number): string => languages.at(index)!;
@@ -112,7 +115,7 @@ const prepareBody = () => {
     if (state !== originData.state) body.state = state;
     if (country !== originData.country) body.country = country;
     if (zipcode !== originData.zipcode) body.zipcode = zipcode;
-    // if (userCanChangeMailFrequency && mailingFrequency !== originData.mailingFrequency) body.mailingFrequency = mailingFrequency;
+    if (userCanChangeMailFrequency && mailingFrequency !== originData.mailingFrequency) body.mailingFrequency = mailingFrequency;
     
     try {
       validationSchema.validateSync(body, { abortEarly: true });
@@ -141,9 +144,13 @@ const prepareBody = () => {
         setState(res.state);
         setCountry(res.country);
         setZipcode(res.zipcode);
+        setMailingFrequency(res.mailingFrequency);
 
         setOriginData(res);
       });
+
+      userHasPermissions(UserPermissions.ChangeMailingFrequency)
+        .then((res: any) => setUserCanChangeMailFrequency(res));
   }, []);
   
   return (
@@ -235,6 +242,16 @@ const prepareBody = () => {
             value={zipcode}
             onChangeText={(value: string) => setZipcode(value)}
           />
+          {userCanChangeMailFrequency && (
+            <Select
+              label="Mailing frequency"
+              value={interest}
+              onSelect={(index: any) => setMailingFrequency(index.row === 0 ? "Weekly" : "Monthly")}
+            >
+              <SelectItem title="Weekly" />
+              <SelectItem title="Monthly" />
+            </Select>
+          )}
         </View>
         <View className="mb-4"></View>
         {error && <Alert>{error}</Alert> }

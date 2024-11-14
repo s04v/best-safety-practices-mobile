@@ -13,8 +13,7 @@ const languages = ["English", "Dutch", "German", "Spanish", "French", "Chinese"]
 const interests = ["Transport safety", "Industrial safety", "Chemical warehousing", "Tank storage"];
 
 const validationSchema = Yup.object().shape({
-  zipcode: Yup.string()
-    .matches(/^[0-9]{5}$/, 'Enter a valid 5-digit zip code'),
+  zipcode: Yup.string(),
   country: Yup.string(),
   state: Yup.string(),
   address: Yup.string(),

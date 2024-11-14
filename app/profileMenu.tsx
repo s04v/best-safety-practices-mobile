@@ -8,8 +8,20 @@ import * as SecureStore from 'expo-secure-store';
 
 import { reloadAppAsync } from 'expo';
 import ScreenLayout from '@/components/ScreenLayout';
+import { useEffect, useState } from 'react';
+import { userHasPermissions } from '@/services/Backend';
+import { UserPermissions } from '@/constants/permisions';
 
 export default function ProfileMenuScreen() {
+  const [canSeeUploadedDocuments, setCanSeeUploadedDocuments] = useState();
+
+  useEffect(() => {
+    userHasPermissions(UserPermissions.SeeUploadedDocuments)
+      .then((res: any) => {
+        setCanSeeUploadedDocuments(res);
+      })
+  }, []);
+  
   const logout = async (e: any) => {
     try {
       await SecureStore.deleteItemAsync("jwt");
@@ -22,7 +34,7 @@ export default function ProfileMenuScreen() {
   return (
     <BaseLayout >
       <NavigationButton text="Personal Information" iconName="person-outline" href="/updatePersonalInfo" />
-      <NavigationButton text="Uploaded Documents" iconName="attach-outline" href="/uploadedDocuments"  />
+      {canSeeUploadedDocuments && <NavigationButton text="Uploaded Documents" iconName="attach-outline" href="/ownedUploadedDocuments"  /> }
       <NavigationButton text="Subscription" iconName="file-tray-full-outline" href="/subscription"  />
     </BaseLayout>
   );

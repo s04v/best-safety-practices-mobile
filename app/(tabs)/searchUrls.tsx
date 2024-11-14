@@ -2,7 +2,7 @@ import BaseLayout from "@/components/BaseLayout";
 import SearchUrlItem from "@/components/url/SearchUrlItem";
 import Pagination from "@/components/ui/Pagination";
 import { UrlDocument } from "@/contracts/entities"; 
-import Backend from "@/services/Backend";
+import Backend, { userHasPermissions } from "@/services/Backend";
 import { useDocumentSearchStore } from "@/stores/useDocumentSearchStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Input } from "@ui-kitten/components";
@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, View } from "react-native";
 import { Text } from "react-native-paper";
 import { useUrlDocumentSearchStore } from "@/stores/useUrlDocumentSearchStore";
+import { UserPermissions } from "@/constants/permisions";
 
 const PAGE_SIZE = 10;
 
@@ -25,6 +26,7 @@ export default function SearchUrlDocuments() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const [hasPermissionsToFilters, setHasPermissionsToFilters] = useState();
 
     const onPageChange = (newPage: number) => {
         setCurrentPage(newPage);
@@ -55,6 +57,13 @@ export default function SearchUrlDocuments() {
     };
 
     useEffect(() => {
+        userHasPermissions(UserPermissions.SearchWithCriteria)
+            .then((res: any) => {
+                setHasPermissionsToFilters(res)
+            });
+    }, []);
+
+    useEffect(() => {
         fetchUrlDocuments();
     }, [currentPage, isFiltersApplied]);
 
@@ -78,10 +87,10 @@ export default function SearchUrlDocuments() {
                         onChangeText={(value) => setSearchQuery(value)}
                         onSubmitEditing={search}
                     />
-                    <Pressable onPress={openFilters} className="mt-0">
+                    { hasPermissionsToFilters && <Pressable onPress={openFilters} className="mt-0">
                         { isFiltersApplied && <View className="bg-red-700 w-3 h-3 rounded-full absolute right-0 z-10"></View> }
                         <Ionicons name="options-outline" size={33}/>
-                    </Pressable>
+                    </Pressable> }
                 </View>
                 <Text className="my-3">Found <Text className="font-bold">{totalDocuments}</Text> documents</Text>
                 { isLoading ? (

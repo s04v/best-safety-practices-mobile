@@ -5,10 +5,11 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { FlatListComponent } from 'react-native';
+import { isUserLoggedIn } from '@/utils/utils';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
+  const isAuth = isUserLoggedIn();
   return (
     <Tabs
       screenOptions={{
@@ -27,6 +28,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="searchDocuments"
         options={{
+          unmountOnBlur: true,
           title: 'Best practices',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'document' : 'document-outline'} color={color} />
@@ -36,10 +38,12 @@ export default function TabLayout() {
       <Tabs.Screen
         name="searchUrls"
         options={{
+          unmountOnBlur: true,
           title: 'Urls',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
           ),
+          href: !isAuth ? null : undefined, 
         }}
       />
       <Tabs.Screen

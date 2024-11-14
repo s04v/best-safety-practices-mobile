@@ -56,7 +56,7 @@ export default function RootLayout() {
 
           <Stack.Screen name="profileMenu" options={{ title: "Profile",  animation: 'ios' }} />
           <Stack.Screen name="updatePersonalInfo" options={{ title: "Personal info", animation: 'ios' }} />
-          <Stack.Screen name="uploadedDocuments" options={{ title: "Uploaded documents", animation: 'ios' }} />
+          <Stack.Screen name="ownedUploadedDocuments" options={{ title: "Uploaded documents", animation: 'ios' }} />
           <Stack.Screen name="subscription" options={{ title: "Subscription", animation: 'ios' }} />
 
           <Stack.Screen name="dashboardMenu" options={{ title: "Dashboard", animation: 'ios' }} />

@@ -16,8 +16,7 @@ const interests = ["Transport safety", "Industrial safety", "Chemical warehousin
 
 const validationSchema = Yup.object().shape({
   zipcode: Yup.string()
-    .required('Zip code is required')
-    .matches(/^[0-9]{5}$/, 'Enter a valid 5-digit zip code'),
+    .required('Zip code is required'),
   country: Yup.string()
     .required('Country is required'),
   state: Yup.string()

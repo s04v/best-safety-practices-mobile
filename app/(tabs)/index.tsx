@@ -26,16 +26,19 @@ export default function HomeScreen() {
   }, []);
 
   const search = () => {
-    router.navigate(`/searchNews?searchQuery=${searchQuery}`);
+    router.navigate(`/searchDocuments?searchQuery=${searchQuery}`);
     setSearchQuery("");
   }
 
   return (
     <BaseLayout withHeader>
+      <View className="px-5 py-3">
+      <Image source={require("@/assets/images/Logo.png")} className="w-[100%]" resizeMode='contain'  />
+      </View>
       <Image source={require("@/assets/images/HomeBanner.jpg")} className="w-[100%] object-contain h-[200px]" resizeMode='cover'/>
       <View className="px-4">
         <Input 
-          placeholder='Search news'
+          placeholder='Search best practices'
           style={{ flex: 1, marginVertical: 20 }}
           textStyle={{ paddingLeft: 20}}
           value={searchQuery}

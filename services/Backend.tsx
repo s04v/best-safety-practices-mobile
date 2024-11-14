@@ -100,4 +100,9 @@ const Backend = {
     download
 };
 
+export async function userHasPermissions(permissionKey: string) {
+    var res = await Backend.get(`user/me/has-permission-to/${permissionKey}`);
+    return res.status === true;
+}
+
 export default Backend;

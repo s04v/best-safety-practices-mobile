@@ -1,13 +1,14 @@
 import BaseLayout from "@/components/BaseLayout";
 import SearchBestPracticeItem from "@/components/best-practice/SearchBestPracticeItem";
 import Pagination from "@/components/ui/Pagination";
+import { UserPermissions } from "@/constants/permisions";
 import { DocumentPreviewItem } from "@/contracts/entities";
-import Backend from "@/services/Backend";
+import Backend, { userHasPermissions } from "@/services/Backend";
 import { useDocumentSearchStore } from "@/stores/useDocumentSearchStore";
 import { useDocumentStore } from "@/stores/useDocumentStore";
 import { Ionicons } from "@expo/vector-icons";
 import { Input } from "@ui-kitten/components";
-import { router, useFocusEffect } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Pressable, ScrollView, View } from "react-native";
 import { Icon, Text, TextInput } from "react-native-paper";
@@ -15,16 +16,19 @@ import { Icon, Text, TextInput } from "react-native-paper";
 const PAGE_SIZE = 10;
 
 export default function SearchDocuments() {
+    const params = useLocalSearchParams();
     const store: any = useDocumentSearchStore();
     const isFiltersApplied = store.publisher || store.interest || store.language;
 
     const [isLoading, setIsLoading] = useState(true);
     const [documents, setDocuments] = useState<DocumentPreviewItem[]>([]);
     const [totalDocuments, setTotalDocuments] = useState(0);
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState(params.searchQuery as string || "");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+
+    const [hasPermissionsToFilters, setHasPermissionsToFilters] = useState();
 
     const onPageChange = (newPage: number) => {
         setCurrentPage(newPage);
@@ -53,9 +57,25 @@ export default function SearchDocuments() {
             })
             .then(res => setIsLoading(false));
     }
+
+    useEffect(() => {
+        userHasPermissions(UserPermissions.SearchWithCriteria)
+            .then((res: any) => {
+                setHasPermissionsToFilters(res)
+            });
+    }, []);
+
     useEffect(() => {
         fetchDocuments();
     },[currentPage, isFiltersApplied]);
+
+    useEffect(() => {
+        if (params.searchQuery) {
+            setSearchQuery(params.searchQuery as string);
+            router.setParams({ searchQuery: "" });
+            search();
+        }
+    }, []);
 
     const openFilters = () => {
         router.push('/searchDocumentsFilter');
@@ -77,10 +97,10 @@ export default function SearchDocuments() {
                     onChangeText={(value) => setSearchQuery(value)}
                     onSubmitEditing={search}
                     />
-                    <Pressable onPress={openFilters} className="mt-0">
+                    {hasPermissionsToFilters &&   <Pressable onPress={openFilters} className="mt-0">
                         { isFiltersApplied && <View className="bg-red-700 w-3 h-3 rounded-full absolute right-0 z-10"></View> }
                         <Ionicons name="options-outline" size={33}/>
-                    </Pressable>
+                    </Pressable>}
                 </View>
                 <Text className="my-3">Found <Text className="font-bold">{totalDocuments}</Text> documents</Text>
                 { isLoading ? <View className="h-[400px] flex-row flex-1 justify-center items-center">

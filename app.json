@@ -4,20 +4,21 @@
     "slug": "bsp-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/app-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+      
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/app-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.frayq.bspmobile"
@@ -38,6 +39,7 @@
       "eas": {
         "projectId": "a967361a-60f3-4eb1-bb7f-a6839c392a2b"
       }
-    }
+    },
+    "newArchEnabled": true
   }
 }
