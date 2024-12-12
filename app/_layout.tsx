@@ -58,11 +58,15 @@ export default function RootLayout() {
           <Stack.Screen name="updatePersonalInfo" options={{ title: "Personal info", animation: 'ios' }} />
           <Stack.Screen name="ownedUploadedDocuments" options={{ title: "Uploaded documents", animation: 'ios' }} />
           <Stack.Screen name="subscription" options={{ title: "Subscription", animation: 'ios' }} />
+          <Stack.Screen name="messagesList" options={{ title: "Messages", animation: 'ios' }} />
 
           <Stack.Screen name="dashboardMenu" options={{ title: "Dashboard", animation: 'ios' }} />
           <Stack.Screen name="usersList" options={{ title: "Users", animation: 'ios' }} />
           <Stack.Screen name="updateUsersPersonalInfo" options={{ title: "Update user", animation: 'ios' }} />
           <Stack.Screen name="permissions" options={{ title: "Permissions", animation: 'ios' }} />
+          <Stack.Screen name="adminMessagesList" options={{ title: "Messages", animation: 'ios' }} />
+          <Stack.Screen name="addMessage" options={{ title: "New message", animation: 'ios' }} />
+          <Stack.Screen name="uploadedDocuments" options={{ title: "Uploaded documents", animation: 'ios' }} />
         </Stack>
       </PaperProvider>
     </ApplicationProvider> 

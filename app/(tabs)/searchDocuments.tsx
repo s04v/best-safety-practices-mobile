@@ -1,8 +1,9 @@
 import BaseLayout from "@/components/BaseLayout";
 import SearchBestPracticeItem from "@/components/best-practice/SearchBestPracticeItem";
 import Pagination from "@/components/ui/Pagination";
+import SearchUrlItem from "@/components/url/SearchUrlItem";
 import { UserPermissions } from "@/constants/permisions";
-import { DocumentPreviewItem } from "@/contracts/entities";
+import { DocumentPreviewItem, UrlDocument } from "@/contracts/entities";
 import Backend, { userHasPermissions } from "@/services/Backend";
 import { useDocumentSearchStore } from "@/stores/useDocumentSearchStore";
 import { useDocumentStore } from "@/stores/useDocumentStore";
@@ -18,10 +19,11 @@ const PAGE_SIZE = 10;
 export default function SearchDocuments() {
     const params = useLocalSearchParams();
     const store: any = useDocumentSearchStore();
-    const isFiltersApplied = store.publisher || store.interest || store.language;
+    const isFiltersApplied = store.publisher || store.interest || store.language || store.disciplinaryContext;
 
     const [isLoading, setIsLoading] = useState(true);
     const [documents, setDocuments] = useState<DocumentPreviewItem[]>([]);
+    const [urls, setUrls] = useState<UrlDocument[]>([]);
     const [totalDocuments, setTotalDocuments] = useState(0);
     const [searchQuery, setSearchQuery] = useState(params.searchQuery as string || "");
 
@@ -41,18 +43,27 @@ export default function SearchDocuments() {
             interest: store.interest,
             language: store.language,
             publisher: store.publisher,
+            disciplinaryContext: store.disciplinaryContext,
             page: currentPage - 1,
             title: searchQuery,
             sortBy: "rating_desc"
         };
 
-        Backend.post('document/search', body)
+        Backend.post('document/search/with-url', body)
             .then((data) => {
-                setDocuments(data.data as DocumentPreviewItem[]);
+                console.log(data);
+                const documents: DocumentPreviewItem[] = []; 
+                const urls: UrlDocument[] = []; 
+
+                data.data.forEach((item: any) => item.publisher ? documents.push(item) : urls.push(item));
+                setDocuments(documents);
+                setUrls(urls);
+
                 setTotalDocuments(data.totalCount);
                 setTotalPages(Math.ceil(data.totalCount / PAGE_SIZE))
             })
             .catch(err => {
+                console.log('ERROR');
                 console.error(err);
             })
             .then(res => setIsLoading(false));
@@ -67,7 +78,16 @@ export default function SearchDocuments() {
 
     useEffect(() => {
         fetchDocuments();
-    },[currentPage, isFiltersApplied]);
+    },[currentPage]);
+
+    useEffect(() => {
+        if (currentPage > 1) {
+            setCurrentPage(1);
+        } else {
+            fetchDocuments();
+        }
+    },[isFiltersApplied]);
+
 
     useEffect(() => {
         if (params.searchQuery) {
@@ -108,7 +128,8 @@ export default function SearchDocuments() {
                 </View> 
                 : <View>
                     <View> 
-                        {documents?.map(item => <SearchBestPracticeItem data={item} />)}
+                        {documents?.map(item => <SearchBestPracticeItem key={item.id} data={item} />)}
+                        {urls?.map(item => <SearchUrlItem key={item.id} data={item} />)}
                     </View>
                     <View className="flex-row justify-center">
                         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />

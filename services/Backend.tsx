@@ -2,6 +2,7 @@
 import * as SecureStore from 'expo-secure-store';
 
 const BASE_URL = "https://bsp-backend-xqdx.onrender.com/api";
+// const BASE_URL = "http://localhost:7091/api";
 
 const getHeaders = () => {
     let headers: any = {
@@ -80,9 +81,13 @@ function download(endpoint: string) {
 
 function handleResponse(response: any) {
     return response.text().then((text: any) => {
+        console.log(response);
+        console.log(text);
         const data = text && JSON.parse(text);
 
         if (!response.ok) {
+            // response.json().then((txt: any) => console.log("123"));
+
             const error = (data && data.errors) || response.statusText;
             return Promise.reject(error);
         }

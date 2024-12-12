@@ -8,9 +8,10 @@ type Props = {
     text: string,
     href?: string,
     onClick?: () => void,
+    indicator?: boolean,
 };
 
-export default function NavigationButton({ iconName, text, href, onClick }: Props) {
+export default function NavigationButton({ iconName, text, href, onClick, indicator = false }: Props) {
     const onPress = () => {
         if (href) {
             router.push(href as Href);
@@ -29,6 +30,7 @@ export default function NavigationButton({ iconName, text, href, onClick }: Prop
             <View className="flex-row items-center gap-3 w-[100%]">
                 <Ionicons name={iconName} size={24} />
                 <Text className="text-xl mr-auto">{ text }</Text>
+                {indicator && <View className="w-2 h-2 bg-red-500 rounded-full" />}
                 <Ionicons name="chevron-forward" size={24} />
             </View>
         </TouchableRipple>

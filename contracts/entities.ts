@@ -5,6 +5,7 @@ export interface DocumentPreviewItem {
     rating: number,
     interest: string,
     language: string,
+    disciplinaryContext: string,
     uploadDate: Date,
 };
 
@@ -14,6 +15,7 @@ export interface UrlDocument {
     rating: number,
     interest: string,
     language: string,
+    disciplinaryContext: string,
     uploadDate: Date,
 }
 

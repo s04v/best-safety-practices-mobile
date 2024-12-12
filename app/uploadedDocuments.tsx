@@ -2,6 +2,7 @@ import BaseLayout from "@/components/BaseLayout";
 import SearchBestPracticeItem from "@/components/best-practice/SearchBestPracticeItem";
 import ScreenLayout from "@/components/ScreenLayout";
 import Pagination from "@/components/ui/Pagination";
+import SearchUrlItem from "@/components/url/SearchUrlItem";
 import { DocumentPreviewItem } from "@/contracts/entities";
 import Backend from "@/services/Backend";
 import { useDocumentSearchStore } from "@/stores/useDocumentSearchStore";
@@ -21,6 +22,7 @@ export default function UploadedDocumentsScreen() {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
   const [documents, setDocuments] = useState<DocumentPreviewItem[]>([]);
+  const [urls, setUrls] = useState<DocumentPreviewItem[]>([]);
   const [totalDocuments, setTotalDocuments] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,12 +35,30 @@ export default function UploadedDocumentsScreen() {
   const fetchDocuments = () => {
     setIsLoading(true);
 
-    Backend.get(`document?page=${currentPage - 1}`)
+    const body = {
+      page: currentPage - 1,
+    };
+
+    Backend.post(`document/search/with-url`, body)
       .then((data) => {
-        console.log(data);
-          setDocuments(data.data as DocumentPreviewItem[]);
-          setTotalDocuments(data.totalCount);
-          setTotalPages(Math.ceil(data.totalCount / PAGE_SIZE))
+        const items = data.data as DocumentPreviewItem[];
+        
+        const docs: any = [];
+        const urls: any = [];
+
+        items.forEach(item => {
+          if(item.publisher) {
+            docs.push(item);
+          } else {
+            urls.push(item);
+          }
+        });
+
+        setDocuments(docs);
+        setUrls(urls);
+
+        setTotalDocuments(data.totalCount);
+        setTotalPages(Math.ceil(data.totalCount / PAGE_SIZE))
       })
       .catch(err => {
           console.error(err);
@@ -54,6 +74,10 @@ export default function UploadedDocumentsScreen() {
     fetchDocuments();
   },[currentPage]);
 
+  const refreshAfterDelete = () => {
+    fetchDocuments();
+  }
+
   console.log(documents)
   return (
     <BaseLayout >
@@ -64,7 +88,8 @@ export default function UploadedDocumentsScreen() {
         </View> 
         : <View>
           <View> 
-            {documents?.map(item => <SearchBestPracticeItem data={item} />)}
+            { documents?.map(item => <SearchBestPracticeItem data={item} refreshAfterDelete={refreshAfterDelete} />) }
+            { urls?.map(item => <SearchUrlItem data={item} refreshAfterDelete={refreshAfterDelete} />) }
           </View>
           <View className="flex-row justify-center">
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />

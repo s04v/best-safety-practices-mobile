@@ -5,11 +5,13 @@ export const useDocumentSearchStore = create((set) => ({
     publisher: "",
     interest: "",
     language: "",
+    disciplinaryContext: "",
     setState: (newState: object) => set({...newState}),
     resetState: () => set({  
         searchQuery: "",
         publisher: "",
         interest: "",
-        language: ""
+        language: "",
+        disciplinaryContext: ""
     })
 }));

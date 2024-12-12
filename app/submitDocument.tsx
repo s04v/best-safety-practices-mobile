@@ -1,19 +1,21 @@
 import React, { useState, useCallback, useReducer } from 'react';
-import { Pressable, Text, View } from 'react-native';
-import { Button, Icon, IndexPath, Input, Layout, Select, SelectItem } from '@ui-kitten/components';
+import { Alert, Linking, Pressable, Text, View } from 'react-native';
+import { Button, CheckBox, Icon, IndexPath, Input, Layout, Select, SelectItem } from '@ui-kitten/components';
 import ScreenLayout from '@/components/ScreenLayout';
 import { useDocumentSearchStore } from '@/stores/useDocumentSearchStore';
 import { router, useNavigation } from 'expo-router';
 import * as DocumentPicker from 'expo-document-picker';
 import Backend from '@/services/Backend';
-import { Alert } from '@/components/ui/Alert';
+import { Alert as ErrorAlert } from '@/components/ui/Alert';
 import * as Yup from 'yup';
 import BaseLayout from '@/components/BaseLayout';
 import { Ionicons } from '@expo/vector-icons';
 import UploadedDocumentsScreen from './uploadedDocuments';
+import { Link } from '@react-navigation/native';
 
 const languages = ["English", "Dutch", "German", "Spanish", "French", "Chinese"];
 const interests = ["Transport safety", "Industrial safety", "Chemical warehousing", "Tank storage"];
+const disciplinaryContexts = ["Normative","Scientific", "Research", "Legislative"];
 
 const validationSchema = Yup.object({
   file: Yup.mixed()
@@ -36,6 +38,9 @@ const validationSchema = Yup.object({
   country: Yup.string()
     .trim()
     .required("Country is required"),
+  disciplinaryContext: Yup.string()
+    .trim()
+    .required("Disciplinary context is required"),
   language: Yup.string()
     .trim()
     .required("Language is required"),
@@ -60,15 +65,17 @@ export default function SubmitDocumentScreen() {
   const [shortDescription, setShortDescription] = useState("");
   const [interest, setInterest] = useState("");
   const [language, setLanguage] = useState("");
+  const [disciplinaryContext, setDisciplinaryContext] = useState("");
   const [country, setCountry] = useState("");
   const [publicationYear, setPublicationYear] = useState("");
   const [publisher, setPublisher] = useState("");
   const [uploadByCompany, setUploadByCompany] = useState<any>(false);
   const [pages, setPages] = useState("");
   const [file, setFile] = useState<any>({});
-  
+  const [agree, setAgree] = useState(false);
   const getInterestByIndex = (index: number): string => interests.at(index)!;
   const getLanguageByIndex = (index: number): string => languages.at(index)!;
+  const getDisciplinaryContextByIndex = (index: number): string => disciplinaryContexts.at(index)!;
 
   const uploadFile = async () => {
     const result: any = await DocumentPicker.getDocumentAsync();
@@ -81,6 +88,7 @@ export default function SubmitDocumentScreen() {
       shortDescription,
       interest,
       language,
+      disciplinaryContext,
       country,
       publicationYear,
       publisher,
@@ -102,6 +110,7 @@ export default function SubmitDocumentScreen() {
     body.append("shortDescription", shortDescription);
     body.append("interest", interest);
     body.append("language", language);
+    body.append("disciplinaryContext", disciplinaryContext);
     body.append("country", country);
     body.append("uploadByCompany", uploadByCompany);
     body.append("publicationYear", publicationYear);
@@ -118,7 +127,12 @@ export default function SubmitDocumentScreen() {
 
     Backend.postFormData('document', body)
     .then(res => {
-      router.navigate('/searchDocuments');
+      router.navigate('/menu');
+      Alert.alert("Success", "Document submitted successfully", [
+        {
+          text: "Ok",
+        }
+      ]);
     })
     .catch(err => console.error(err));
   }
@@ -126,7 +140,7 @@ export default function SubmitDocumentScreen() {
   return (
     <BaseLayout>
       <View className="px-5 flex-col flex-1 mt-2">
-        {error && <View className="mb-2"><Alert>{error}</Alert></View> }
+        {error && <View className="mb-2"><ErrorAlert>{error}</ErrorAlert></View> }
         <View className="flex-col gap-y-4 flex-1 ">
           <Input 
             label='Title'
@@ -153,6 +167,13 @@ export default function SubmitDocumentScreen() {
             onSelect={(index: any) => setLanguage(getLanguageByIndex(index.row))}
           >
             { languages.map((item: string) => <SelectItem title={item} /> ) }
+          </Select>
+          <Select
+            label="Disciplinary context"
+            value={disciplinaryContext}
+            onSelect={(index: any) => setDisciplinaryContext(getDisciplinaryContextByIndex(index.row))}
+          >
+            { disciplinaryContexts.map((item: string) => <SelectItem title={item} /> ) }
           </Select>
           <Select
             label="Uploaded by company"
@@ -189,8 +210,20 @@ export default function SubmitDocumentScreen() {
             {file.name && <Text>{file.name}</Text>}
           <Button status="info" style={{ flex: 1 }} onPress={uploadFile}>Upload file</Button>
         </View>
+        <View style={{ marginTop: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
+          <CheckBox 
+            checked={agree} 
+            onChange={() => setAgree(!agree)}
+          />
+          <Text style={{ marginLeft: 8 }}>
+            I agree with the{' '}
+            <Text className="text-blue-500" onPress={() => Linking.openURL('https://bestsafetypractices.org/conditions')}>
+              terms and conditions
+            </Text>
+          </Text>
+        </View>
         <View className="flex-row self-stretch gap-x-2 mt-2">
-          <Button status="info" style={{ flex: 1 }} onPress={sendForm}>Submit</Button>
+          <Button status="info" style={{ flex: 1 }} onPress={sendForm} disabled={!agree}>Submit</Button>
         </View>
       </View>
     </BaseLayout>

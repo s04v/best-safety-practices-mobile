@@ -35,7 +35,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="searchUrls"
         options={{
           unmountOnBlur: true,
@@ -45,7 +45,7 @@ export default function TabLayout() {
           ),
           href: !isAuth ? null : undefined, 
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="searchNews"
         options={{

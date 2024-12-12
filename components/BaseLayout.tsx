@@ -8,7 +8,7 @@ export default function BaseLayout({ children, withHeader = false } : any) {
     StatusBar.setBarStyle('dark-content');
     //StatusBar.setBackgroundColor('#fff');
     return (
-        <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} >
+        <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} keyboardShouldPersistTaps='handled' >
             <Animated.View className="pb-3" style={{ paddingTop: withHeader ? StatusBar.currentHeight : 10 }}>
                 { children }
             </Animated.View>

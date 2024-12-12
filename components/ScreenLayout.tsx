@@ -11,7 +11,7 @@ export default function ScreenLayout({ children }: any) {
 
   return (
     <SafeAreaView style={{ marginTop: StatusBar.currentHeight }} className="flex-1">
-      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} className="flex-1 ">
+      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} className="flex-1 " keyboardShouldPersistTaps='handled'>
         <Animated.View className="pb-5 flex-1" >
           {children}
         </Animated.View>

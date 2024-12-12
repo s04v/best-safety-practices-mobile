@@ -4,7 +4,7 @@ import BestPracticeReviewItem from '@/components/best-practice/BestPracticeRevie
 import NavigationButton from '@/components/NavigationButton';
 import Pagination from '@/components/ui/Pagination';
 import StarRating from '@/components/ui/StarRating';
-import Backend from '@/services/Backend';
+import Backend, { userHasPermissions } from '@/services/Backend';
 import { useDocumentStore } from '@/stores/useDocumentStore';
 import { isUserLoggedIn } from '@/utils/utils';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,6 +15,7 @@ import { View, SafeAreaView, StatusBar, Pressable, Platform, Text, ActivityIndic
 import { Icon, TouchableRipple } from 'react-native-paper';
 
 import * as FileSystem from 'expo-file-system';
+import { UserPermissions } from '@/constants/permisions';
 
 function Field({ name, value }: any) {
   return (
@@ -31,6 +32,7 @@ export default function DocumentPreviewScreen() {
   const [reviews, setReviews] = useState<any>([]);
   const [rating, setRating] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasPermissionToDownload, setPermissionToDownload] = useState(false);
 
   const navigation = useNavigation();
 
@@ -57,21 +59,12 @@ export default function DocumentPreviewScreen() {
         console.error(err);
       })
       .then(res => setIsLoading(false));
-  }, []);
 
-  // async function download() {
-  //   const filename = "dummy.pdf";
-  //   const result = await FileSystem.downloadAsync(
-  //     'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-  //     FileSystem.documentDirectory + filename
-  //   );
-  
-  //   // Log the download result
-  //   console.log(result);
-  
-  //   // Save the downloaded file
-  //   saveFile(result.uri, filename, result.headers["Content-Type"]);
-  // }
+      userHasPermissions(UserPermissions.DownloadDocument)
+      .then((res: any) => {
+        setPermissionToDownload(res);
+      })
+  }, []);
 
   const downloadFile = async (fileUuid: string, fileName: string, fileType: string) => {
     console.log('Attempting to Download file: ', fileUuid);
@@ -132,6 +125,7 @@ export default function DocumentPreviewScreen() {
     }
   }
 
+
   return (
     <BaseLayout>
       { isLoading ? <View className="h-screen flex-row flex-1 justify-center items-center">
@@ -144,15 +138,18 @@ export default function DocumentPreviewScreen() {
       
           <Field name="Interest" value={ document.interest } />
           <Field name="Language" value={ document.language } />
+          <Field name="Disciplinary context" value={ document.disciplinaryContext } />
           <Field name="Publication Year" value={ document.publicationYear } />
           <Field name="Upload by Company" value={ document.uploadByCompany ? "Yes" : "No" } />
           <Field name="Format" value={ document.format }/>
           <Field name="Short description" value={ document.shortDescription } />
-          <View className="my-4">
-            <Button onPress={() => downloadFile(document.attachment.guid, document.attachment.fileName, document.attachment.contentType)} appearance='outline' >
-              Download file
-            </Button>
-          </View>
+          {  hasPermissionToDownload && <>
+            <View className="my-4">
+              <Button onPress={() => downloadFile(document.attachment.guid, document.attachment.fileName, document.attachment.contentType)} appearance='outline' >
+                Download file
+              </Button>
+            </View>
+          </> }
           <View className="flex-row justify-between items-center mt-4">
             <Text className="text-3xl">Reviews</Text>
             { isUserLoggedIn() &&   <Pressable onPress={() => router.navigate("/createDocumentReview")}>

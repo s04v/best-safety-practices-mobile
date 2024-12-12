@@ -79,6 +79,7 @@ export default function UrlDocumentPreviewScreen() {
       
           <Field name="Interest" value={ url.interest } />
           <Field name="Language" value={ url.language } />
+          <Field name="Disciplinary context" value={ url.disciplinaryContext } />
           <Field name="Url" value={ url.url } />
           <Field name="Upload by Company" value={ url.uploadByCompany ? "Yes" : "No" } />
           <Field name="Description" value={ url.description } />

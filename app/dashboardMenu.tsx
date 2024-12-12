@@ -16,6 +16,7 @@ export default function DashboardMenuScreen() {
       <NavigationButton text="Users" iconName="person-outline" href="/usersList" />
       <NavigationButton text="Best Practices" iconName="attach-outline" href="/uploadedDocuments"  />
       <NavigationButton text="Permissions" iconName="file-tray-full-outline" href="/permissions"  />
+      <NavigationButton text="Messages" iconName="file-tray-full-outline" href="/adminMessagesList"  />
     </BaseLayout>
   );
 }

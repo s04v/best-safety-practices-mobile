@@ -8,6 +8,7 @@ import BaseLayout from '@/components/BaseLayout';
 
 const languages = ["English", "Dutch", "German", "Spanish", "French", "Chinese"];
 const interests = ["Transport safety", "Industrial safety", "Chemical warehousing", "Tank storage"];
+const disciplinaryContexts = ["Normative","Scientific", "Research", "Legislative"];
 
 export default function SearchDocumentsFilterScreen() {
   const navigator = useNavigation();
@@ -17,13 +18,15 @@ export default function SearchDocumentsFilterScreen() {
     publisher: store.publisher,
     interest: store.interest,
     language: store.language,
+    disciplinaryContext: store.disciplinaryContext
   });
 
   const getInterestByIndex = (index: number): string => interests.at(index)!;
   const getLanguageByIndex = (index: number): string => languages.at(index)!;
+  const getDisciplinaryContextByIndex = (index: number): string => disciplinaryContexts.at(index)!;
 
   const applyFilters = () => {
-    store.setState(filters);
+    store.setState({ ...filters, page: 0 });
     navigator.goBack();
   }
 
@@ -32,6 +35,7 @@ export default function SearchDocumentsFilterScreen() {
       publisher: "",
       interest: "",
       language: "",
+      disciplinaryContext: ""
     })
     store.resetState();
   }
@@ -59,6 +63,13 @@ export default function SearchDocumentsFilterScreen() {
             onSelect={(index: any) =>  setFilters(prev => ({ ...prev, language: getLanguageByIndex(index.row) }))}
           >
             { languages.map((item: string) => <SelectItem title={item} /> ) }
+          </Select>
+          <Select
+            label="Disciplinary context"
+            value={filters.disciplinaryContext}
+            onSelect={(index: any) =>  setFilters(prev => ({ ...prev, disciplinaryContext: getDisciplinaryContextByIndex(index.row) }))}
+          >
+            { disciplinaryContexts.map((item: string) => <SelectItem title={item} /> ) }
           </Select>
         </View>
         <View className="flex-row self-stretch gap-x-2 mt-4">

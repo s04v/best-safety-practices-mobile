@@ -1,12 +1,12 @@
 import BaseLayout from '@/components/BaseLayout';
 import ScreenLayout from '@/components/ScreenLayout';
-import { Alert } from '@/components/ui/Alert';
+import { Alert as TextAlert } from '@/components/ui/Alert';
 import Backend from '@/services/Backend';
 import { Ionicons } from '@expo/vector-icons';
-import { Button, Datepicker, Input, Select, SelectItem } from '@ui-kitten/components';
+import { Button, CheckBox, Datepicker, Input, Select, SelectItem } from '@ui-kitten/components';
 import { router, useNavigation } from 'expo-router';
 import { useState } from 'react';
-import { View, Text, SafeAreaView, StatusBar, Pressable, Platform } from 'react-native';
+import { View, Text, SafeAreaView, StatusBar, Pressable, Platform, Alert, Linking } from 'react-native';
 import { Icon } from 'react-native-paper';
 import * as Yup from 'yup';
 
@@ -64,7 +64,7 @@ export default function RegisterScreen() {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [zipcode, setZipcode] = useState("");
-  
+  const [agree, setAgree] = useState(false);
   const getInterestByIndex = (index: number): string => interests.at(index)!;
   const getLanguageByIndex = (index: number): string => languages.at(index)!;
 
@@ -96,15 +96,22 @@ export default function RegisterScreen() {
     }
 
     Backend.post("auth/register", body)
-      .then(res => router.navigate("/login"))
+      .then(res => {
+        Alert.alert("Success", "You have been registered successfully, close the window and you will be redirected to the login page.", [
+          {
+            text: "Ok",
+            onPress: () => router.navigate("/login")
+          }
+        ]);
+      })
       .catch(err => setError(err.length >= 1 && err[0]));
   };
-  
+
   return (
     <BaseLayout>
       <View className="px-5 flex-col flex-1">
         <View className="flex-col gap-y-4 flex-1">
-          {error && <Alert>{error}</Alert> }
+          {error && <TextAlert>{error}</TextAlert> }
           <Input 
             label="First Name"
             placeholder="Enter your first name"
@@ -191,9 +198,22 @@ export default function RegisterScreen() {
           />
         </View>
         <View className="mb-4"></View>
-        {error && <Alert>{error}</Alert> }
+        {error && <TextAlert>{error}</TextAlert> }
+
+        <View style={{ marginTop: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
+          <CheckBox 
+            checked={agree} 
+            onChange={() => setAgree(!agree)}
+          />
+          <Text style={{ marginLeft: 8 }}>
+            I agree with the{' '}
+            <Text className="text-blue-500" onPress={() => Linking.openURL('https://bestsafetypractices.org/conditions')}>
+              terms and conditions
+            </Text>
+          </Text>
+        </View>
         <View className="flex-row self-stretch gap-x-2 mt-4">
-          <Button style={{ flex: 1 }} onPress={sendForm}>Register</Button>
+          <Button style={{ flex: 1 }} onPress={sendForm} disabled={!agree}>Register</Button>
         </View>
       </View>
     </BaseLayout>

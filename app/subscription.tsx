@@ -13,8 +13,6 @@ import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Linking, Pressable, ScrollView, View } from "react-native";
 import { Icon, Text, TextInput } from "react-native-paper";
 
-const PAGE_SIZE = 10;
-
 export default function SubscriptionScreen() {
   const navigation = useNavigation();
 
@@ -22,13 +20,13 @@ export default function SubscriptionScreen() {
     
   useEffect(() => {
     Backend.get('user/me/subscription')
-      .then(res=> {
-          setCurrentPlan(res.name);
+      .then(res => {
+        setCurrentPlan(res.name);
       });
   }, []);
 
   const openPortal = async () => {
-    await Linking.openURL("https://billing.stripe.com/p/login/test_7sI28O4mbg9A8qA288");
+    await Linking.openURL("https://billing.stripe.com/p/login/aEUaIt84C8ZngfK144");
   }
 
   return (
